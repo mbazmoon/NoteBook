@@ -1,5 +1,7 @@
 package com.azmoon.notebook.service.impl;
 
+import com.azmoon.notebook.exception.RoleNotFoundException;
+import com.azmoon.notebook.exception.UserNotFoundException;
 import com.azmoon.notebook.model.Role;
 import com.azmoon.notebook.model.User;
 import com.azmoon.notebook.repository.RoleRepository;
@@ -9,14 +11,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 @Transactional
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
@@ -27,27 +36,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addRoleToUser(String userId, String roleName) {
-        User user = userRepository.findByUserId(userId);
+    public void addRoleToUser(String userId, String roleName) throws UserNotFoundException, RoleNotFoundException {
+        User user = getByUserId(userId);
         log.debug("add role:{} to user:{}", roleName, user.getUsername());
-        Role role = roleRepository.findByName(roleName);
+        Role role = roleRepository.findByName(roleName).orElseThrow(() -> new RoleNotFoundException(String.format("role with Name: %s not found", roleName)));
         user.getRoles().add(role);
         userRepository.save(user);
     }
 
     @Override
-    public User getByUsername(String username) {
+    public User getByUsername(String username) throws UserNotFoundException {
 
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(String.format("user with username %s not found", username)));
     }
 
     @Override
-    public User getByUserId(String userId) {
-        return userRepository.findByUserId(userId);
+    public User getByUserId(String userId) throws UserNotFoundException {
+
+        return userRepository.findByUserId(userId).orElseThrow(() -> new UserNotFoundException(String.format("user with userId %s not found", userId)));
     }
 
     @Override
     public Page<User> getAll(int page, int size) {
         return userRepository.findAll(PageRequest.of(page, size));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("user with username %s not found", username)));
+        List<SimpleGrantedAuthority> simpleGrantedAuthorityList = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), simpleGrantedAuthorityList);
     }
 }

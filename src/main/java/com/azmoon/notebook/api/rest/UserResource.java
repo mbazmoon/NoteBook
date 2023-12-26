@@ -6,6 +6,8 @@ import com.azmoon.notebook.api.rest.spec.RoleCreateRequest;
 import com.azmoon.notebook.api.rest.spec.RoleCreateResponse;
 import com.azmoon.notebook.api.rest.spec.UserCreateRequest;
 import com.azmoon.notebook.api.rest.spec.UserCreateResponse;
+import com.azmoon.notebook.exception.RoleNotFoundException;
+import com.azmoon.notebook.exception.UserNotFoundException;
 import com.azmoon.notebook.model.User;
 import com.azmoon.notebook.service.RoleService;
 import com.azmoon.notebook.service.UserService;
@@ -47,7 +49,7 @@ public class UserResource {
     }
 
     @PostMapping("/role/add-to-user")
-    public ResponseEntity addRoleToUser(@Valid @RequestBody AddRoleToUserRequest request) {
+    public ResponseEntity addRoleToUser(@Valid @RequestBody AddRoleToUserRequest request) throws UserNotFoundException, RoleNotFoundException {
         userService.addRoleToUser(request.getUserId(), request.getRoleName());
         return ResponseEntity.ok(HttpStatus.OK);
     }

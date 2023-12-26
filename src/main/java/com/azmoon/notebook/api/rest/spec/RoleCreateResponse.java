@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleCreateResponse {
+public class RoleCreateResponse extends BaseResponseService{
     private String name;
 }

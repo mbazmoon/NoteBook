@@ -1,5 +1,7 @@
 package com.azmoon.notebook;
 
+import com.azmoon.notebook.exception.RoleNotFoundException;
+import com.azmoon.notebook.exception.UserNotFoundException;
 import com.azmoon.notebook.model.Role;
 import com.azmoon.notebook.model.User;
 import com.azmoon.notebook.service.RoleService;
@@ -30,7 +32,13 @@ public class NotebookApplication {
             userService.save(User.builder().name("linus torvalds").username("ltorvalds").password("1234").build());
 
             User user1 = userService.getByUsername("mbazmoon");
-            roleService.getAll().forEach(role -> userService.addRoleToUser(user1.getUserId(), role.getName()));
+            roleService.getAll().forEach(role -> {
+                try {
+                    userService.addRoleToUser(user1.getUserId(), role.getName());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
             User user2 = userService.getByUsername("mfowler");
             userService.addRoleToUser(user2.getUserId(), "ROLE_USER");
