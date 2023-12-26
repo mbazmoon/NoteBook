@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Builder.Default
     private String userId= UUID.randomUUID().toString();
     private String name;
     private String username;
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
+    @Builder.Default
     private List<Role> roles = new ArrayList<>();
 }

@@ -6,6 +6,8 @@ import com.azmoon.notebook.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -14,6 +16,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRoleByName(String name) {
         return roleRepository.findByName(name);
+    }
+
+    @Override
+    public List<Role> getAll() {
+        return roleRepository.findAll();
     }
 
     @Override
