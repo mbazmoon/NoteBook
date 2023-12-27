@@ -13,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -27,10 +25,15 @@ public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
 
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private static final String[] AUTH_WHITELIST = {
+            "/v1/login/**",
+            "/v1/token/refresh/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
+
 
     @Bean()
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -40,13 +43,13 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationConfiguration.getAuthenticationManager());
-        customAuthenticationFilter.setFilterProcessesUrl("/api/v1/login");
+        customAuthenticationFilter.setFilterProcessesUrl("/v1/login");
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authz) -> {
-                            authz.requestMatchers("/api/v1/login/**","/api/v1/token/refresh/**").permitAll();
-                            authz.requestMatchers(HttpMethod.GET, "/api/v1/user/**").hasAnyAuthority("ROLE_USER");
-                            authz.requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasAnyAuthority("ROLE_ADMIN");
-                             authz.anyRequest().authenticated();
+                            authz.requestMatchers(AUTH_WHITELIST).permitAll();
+                            authz.requestMatchers(HttpMethod.GET, "/v1/user/**").hasAnyAuthority("ROLE_USER");
+                            authz.requestMatchers(HttpMethod.POST, "/v1/user/**").hasAnyAuthority("ROLE_ADMIN");
+                            authz.anyRequest().authenticated();
                         }
                 )
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

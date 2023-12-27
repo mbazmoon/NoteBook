@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping(path = "api/v1")
+@RequestMapping(path = "v1")
 public class UserResource {
     private final UserService userService;
     private final RoleService roleService;
@@ -75,7 +75,6 @@ public class UserResource {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
-
                 String refreshToken = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();

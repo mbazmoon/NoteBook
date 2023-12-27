@@ -28,9 +28,16 @@ import static java.util.Arrays.stream;
 
 @Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
+    private static final String[] AUTH_WHITELIST = {
+            "/api/v1/login",
+            "/api/v1/token/refresh",
+            "/api/v3/api-docs",
+            "/api/swagger-ui.html"
+    };
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/v1/login") || request.getServletPath().equals("/api/v1/token/refresh")) {
+        if (stream(AUTH_WHITELIST).anyMatch(uri -> request.getRequestURI().equals(uri))) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
