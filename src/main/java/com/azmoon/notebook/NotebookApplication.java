@@ -1,7 +1,5 @@
 package com.azmoon.notebook;
 
-import com.azmoon.notebook.exception.RoleNotFoundException;
-import com.azmoon.notebook.exception.UserNotFoundException;
 import com.azmoon.notebook.model.Role;
 import com.azmoon.notebook.model.User;
 import com.azmoon.notebook.service.RoleService;
