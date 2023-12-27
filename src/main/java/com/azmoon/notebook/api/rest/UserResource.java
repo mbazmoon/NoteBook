@@ -17,6 +17,7 @@ import com.azmoon.notebook.model.User;
 import com.azmoon.notebook.service.RoleService;
 import com.azmoon.notebook.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -43,6 +44,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "User", description = "user management Api")
 @RequestMapping(path = "v1")
 public class UserResource {
     private final UserService userService;
