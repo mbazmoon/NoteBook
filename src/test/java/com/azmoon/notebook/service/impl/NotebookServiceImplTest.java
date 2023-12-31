@@ -2,12 +2,13 @@ package com.azmoon.notebook.service.impl;
 
 import com.azmoon.notebook.exception.NotebookNotFoundException;
 import com.azmoon.notebook.exception.UserNotFoundException;
-import com.azmoon.notebook.model.Notebook;
-import com.azmoon.notebook.model.Role;
-import com.azmoon.notebook.model.Tag;
-import com.azmoon.notebook.model.User;
+import com.azmoon.notebook.entity.Notebook;
+import com.azmoon.notebook.entity.Role;
+import com.azmoon.notebook.entity.Tag;
+import com.azmoon.notebook.entity.User;
 import com.azmoon.notebook.repository.NotebookRepository;
 import com.azmoon.notebook.service.TagService;
+import com.azmoon.notebook.service.mapper.NotebookServiceMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -35,6 +36,9 @@ class NotebookServiceImplTest {
 
     @MockBean
     private UserServiceImpl userService;
+
+    @MockBean
+    private NotebookServiceMapper mapper;
 
     @Test
     void getByNumber() throws NotebookNotFoundException {

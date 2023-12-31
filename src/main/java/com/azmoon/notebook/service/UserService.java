@@ -2,7 +2,7 @@ package com.azmoon.notebook.service;
 
 import com.azmoon.notebook.exception.RoleNotFoundException;
 import com.azmoon.notebook.exception.UserNotFoundException;
-import com.azmoon.notebook.model.User;
+import com.azmoon.notebook.entity.User;
 import org.springframework.data.domain.Page;
 
 public interface UserService {

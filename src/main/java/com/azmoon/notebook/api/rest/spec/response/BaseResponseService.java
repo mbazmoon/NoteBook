@@ -1,13 +1,13 @@
-package com.azmoon.notebook.api.rest.spec;
+package com.azmoon.notebook.api.rest.spec.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class BaseResponseService {
-    private String status;
+    private String message="your request is successful";
 
 }

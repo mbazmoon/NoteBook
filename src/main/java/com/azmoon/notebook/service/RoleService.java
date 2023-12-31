@@ -1,6 +1,6 @@
 package com.azmoon.notebook.service;
 
-import com.azmoon.notebook.model.Role;
+import com.azmoon.notebook.entity.Role;
 
 import java.util.List;
 

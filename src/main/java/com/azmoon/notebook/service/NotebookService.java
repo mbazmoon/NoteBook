@@ -1,9 +1,11 @@
 package com.azmoon.notebook.service;
 
+import com.azmoon.notebook.api.rest.spec.model.NotebookCreateModel;
 import com.azmoon.notebook.exception.NotebookNotFoundException;
-import com.azmoon.notebook.model.Notebook;
-import com.azmoon.notebook.model.Tag;
-import com.azmoon.notebook.model.User;
+import com.azmoon.notebook.entity.Notebook;
+import com.azmoon.notebook.entity.Tag;
+import com.azmoon.notebook.entity.User;
+import com.azmoon.notebook.exception.UserNotFoundException;
 import org.springframework.data.domain.Page;
 
 public interface NotebookService {
@@ -16,5 +18,6 @@ public interface NotebookService {
     Page<Notebook> getAll(User owner, int page, int size);
 
     Notebook save(Notebook notebook);
+    Notebook add(NotebookCreateModel model) throws UserNotFoundException;
 
 }

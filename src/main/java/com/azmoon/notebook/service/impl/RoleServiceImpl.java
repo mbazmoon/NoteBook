@@ -1,6 +1,6 @@
 package com.azmoon.notebook.service.impl;
 
-import com.azmoon.notebook.model.Role;
+import com.azmoon.notebook.entity.Role;
 import com.azmoon.notebook.repository.RoleRepository;
 import com.azmoon.notebook.service.RoleService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.azmoon.notebook.repository;
 
-import com.azmoon.notebook.model.User;
+import com.azmoon.notebook.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

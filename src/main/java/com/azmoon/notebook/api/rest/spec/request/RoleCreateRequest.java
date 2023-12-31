@@ -1,4 +1,4 @@
-package com.azmoon.notebook.api.rest.spec;
+package com.azmoon.notebook.api.rest.spec.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

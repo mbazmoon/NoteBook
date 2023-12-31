@@ -1,4 +1,4 @@
-package com.azmoon.notebook.api.rest.spec;
+package com.azmoon.notebook.api.rest.spec.response;
 
 import lombok.Getter;
 import lombok.Setter;

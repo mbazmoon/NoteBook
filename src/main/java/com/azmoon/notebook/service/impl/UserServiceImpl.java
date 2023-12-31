@@ -2,8 +2,8 @@ package com.azmoon.notebook.service.impl;
 
 import com.azmoon.notebook.exception.RoleNotFoundException;
 import com.azmoon.notebook.exception.UserNotFoundException;
-import com.azmoon.notebook.model.Role;
-import com.azmoon.notebook.model.User;
+import com.azmoon.notebook.entity.Role;
+import com.azmoon.notebook.entity.User;
 import com.azmoon.notebook.repository.RoleRepository;
 import com.azmoon.notebook.repository.UserRepository;
 import com.azmoon.notebook.service.UserService;

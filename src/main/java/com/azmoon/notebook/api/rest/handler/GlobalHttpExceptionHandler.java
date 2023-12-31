@@ -1,6 +1,6 @@
 package com.azmoon.notebook.api.rest.handler;
 
-import com.azmoon.notebook.api.rest.spec.BaseResponseService;
+import com.azmoon.notebook.api.rest.spec.response.BaseResponseService;
 import com.azmoon.notebook.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

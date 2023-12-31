@@ -1,7 +1,7 @@
 package com.azmoon.notebook;
 
-import com.azmoon.notebook.model.Role;
-import com.azmoon.notebook.model.User;
+import com.azmoon.notebook.entity.Role;
+import com.azmoon.notebook.entity.User;
 import com.azmoon.notebook.service.RoleService;
 import com.azmoon.notebook.service.UserService;
 import org.springframework.boot.CommandLineRunner;
