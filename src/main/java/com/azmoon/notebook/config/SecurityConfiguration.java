@@ -3,6 +3,7 @@ package com.azmoon.notebook.config;
 import com.azmoon.notebook.filter.CustomAuthenticationFilter;
 import com.azmoon.notebook.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

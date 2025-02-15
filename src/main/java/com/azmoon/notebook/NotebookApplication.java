@@ -7,6 +7,7 @@ import com.azmoon.notebook.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableCaching
 public class NotebookApplication {
 
     public static void main(String[] args) {

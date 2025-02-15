@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,14 +36,16 @@ public class NotebookResource {
 
     @GetMapping("/all")
     public ResponseEntity<List<NotebookResponse>> getAll(@RequestParam int page, @RequestParam int size) throws BusinessException {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getByUsername(username);
+        User user = userService.getByUsername(getCurrentUser());
         return ResponseEntity.ok().body(mapper.toResponseList(notebookService.getAll(user, page, size).getContent()));
     }
 
     @PostMapping("")
     public ResponseEntity<NotebookResponse> addNote(@Valid @RequestBody NotebookCreateRequest request) throws BusinessException {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok().body(mapper.toResponse(notebookService.add(mapper.ToModel(request, username))));
+        return ResponseEntity.ok().body(mapper.toResponse(notebookService.add(mapper.ToModel(request, getCurrentUser()))));
+    }
+
+    private static String getCurrentUser() {
+        return ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 }

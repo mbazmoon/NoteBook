@@ -9,6 +9,8 @@ import com.azmoon.notebook.repository.UserRepository;
 import com.azmoon.notebook.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +34,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final BCryptPasswordEncoder encoder;
 
     @Override
+    @CacheEvict(value = "user",allEntries = true)
     public User save(User user) {
         log.debug("save user with username:{} to DB", user.getUsername());
         user.setPassword(encoder.encode(user.getPassword()));
@@ -39,6 +42,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @CacheEvict(value = "user",allEntries = true)
     public void addRoleToUser(String userId, String roleName) throws UserNotFoundException, RoleNotFoundException {
         User user = getByUserId(userId);
         log.debug("add role:{} to user:{}", roleName, user.getUsername());

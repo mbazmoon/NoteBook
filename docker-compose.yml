@@ -1,31 +1,27 @@
-version: "3.7"
 services:
-  api_service:
-    build: .
-    restart: always
-    ports:
-      - 8080:8080
-    networks:
-      - springapimysql-net
+  notebook-db:
+    image: mysql:8.0.29
+    container_name: noteBook-db
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/notebook?allowPublicKeyRetrieval=true
-    depends_on:
-      - mysqldb
-
+      MYSQL_DATABASE: 'notebook'
+      MYSQL_USER: 'notebook'
+      MYSQL_ROOT_PASSWORD: 'notebook'
+      MYSQL_PASSWORD: 'notebook'
+    ports:
+      - 3311:3306
+    networks:
+      - notebook-network
     volumes:
-      - .m2:/root/.m2
+      - /tmp/notebook-mysql:/var/lib/mysql
 
-  mysqldb:
-    image: "mysql:8.0"
-    restart: always
+  notebook-redis:
+    image: redis
+    container_name: notebook-redis
+    command: redis-server --requirepass lIj0GkaDs6xodIyA --appendonly yes
     ports:
-      - 3306:3306
+      - 6379:6379
     networks:
-      - springapimysql-net
-    environment:
-      MYSQL_DATABASE: notebook
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 1234
-      MYSQL_ROOT_PASSWORD: 1234
+      - notebook-network
 networks:
-  springapimysql-net:
+  notebook-network:
+    driver: bridge

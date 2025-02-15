@@ -4,6 +4,7 @@ import com.azmoon.notebook.entity.Role;
 import com.azmoon.notebook.repository.RoleRepository;
 import com.azmoon.notebook.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @CacheEvict(value = "role",allEntries = true)
     public Role save(Role role) {
         return roleRepository.save(role);
     }

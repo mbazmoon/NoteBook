@@ -13,6 +13,7 @@ import com.azmoon.notebook.service.UserService;
 import com.azmoon.notebook.service.mapper.NotebookServiceMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,7 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
+
     public Page<Notebook> getAll(User owner, int page, int size) {
         return notebookRepository.findAllByOwner(owner, PageRequest.of(page, size));
     }
