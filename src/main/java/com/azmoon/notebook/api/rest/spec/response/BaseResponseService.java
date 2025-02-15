@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseResponseService {
-    private String message="your request is successful";
+    private String message = "your request is successful";
 
 }

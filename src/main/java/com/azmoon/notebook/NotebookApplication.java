@@ -5,18 +5,28 @@ import com.azmoon.notebook.entity.User;
 import com.azmoon.notebook.service.RoleService;
 import com.azmoon.notebook.service.UserService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @EnableJpaAuditing
 public class NotebookApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NotebookApplication.class, args);
+//        SpringApplication.run(NotebookApplication.class, args);
+        List<String> names = List.of("mohammad", "bahar", "arian", "bahar");
+        Map<String, Long> result = names.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        System.out.println(result);
     }
+
 
     @Bean
     CommandLineRunner run(UserService userService, RoleService roleService) {
@@ -42,7 +52,6 @@ public class NotebookApplication {
 
             User user2 = userService.getByUsername("mfowler");
             userService.addRoleToUser(user2.getUserId(), "ROLE_USER");
-            userService.addRoleToUser(user2.getUserId(), "ROLE_MANGER");
 
             User user3 = userService.getByUsername("rcmartin");
             userService.addRoleToUser(user3.getUserId(), "ROLE_ADMIN");

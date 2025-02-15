@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                             authz.requestMatchers(AUTH_WHITELIST).permitAll();
                             authz.requestMatchers(HttpMethod.GET, "/v1/user/**").hasAnyAuthority("ROLE_USER");
                             authz.requestMatchers(HttpMethod.GET, "/v1/notebook/**").hasAnyAuthority("ROLE_USER");
-                            authz.requestMatchers(HttpMethod.POST, "/v1/notebook/**").hasAnyAuthority("ROLE_USER");
+                            authz.requestMatchers(HttpMethod.POST, "/v1/notebook/**").hasAnyAuthority("ROLE_ADMIN");
                             authz.requestMatchers(HttpMethod.POST, "/v1/user/**").hasAnyAuthority("ROLE_ADMIN");
                             authz.anyRequest().authenticated();
                         }
